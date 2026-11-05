@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Appointment Booking</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>CarePoint Clinic</h1>
+            <p>Book your next appointment with ease.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h2>Connect to Booking API</h2>
+            <p class="muted">Enter your API key to access appointments.</p>
+
+            <div class="form-group">
+                <label for="apiKey">API Key</label>
+                <input type="password" id="apiKey" placeholder="Enter API key">
+            </div>
+
+            <button id="loadSlots" class="btn">View Available Slots</button>
+        </section>
+
+        <section class="card">
+            <h2>Available Appointments</h2>
+            <p class="muted">Choose a suitable appointment time.</p>
+
+            <div id="slots" class="slots">
+                <p>Enter your API key and click View Available Slots.</p>
+            </div>
+        </section>
+
+        <section class="card" id="bookingSection" hidden>
+            <h2>Book Your Appointment</h2>
+
+            <p id="selectedSlot"></p>
+
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <button type="submit" class="btn">
+                    Confirm Booking
+                </button>
+            </form>
+        </section>
+
+        <section class="card confirmation" id="confirmation" hidden>
+            <h2>Appointment Confirmed!</h2>
+            <p>Your appointment has been successfully booked.</p>
+
+            <div id="confirmationDetails"></div>
+
+            <button id="bookAnother" class="btn">
+                Book Another Appointment
+            </button>
+        </section>
+
+        <p id="message" role="alert"></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 CarePoint Clinic. All rights reserved.</p>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
