@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -59,12 +63,14 @@ label {
     margin-bottom: 8px;
 }
 
-input {
+input,
+select {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 15px;
+    background: white;
 }
 
 .btn {
@@ -84,6 +90,14 @@ input {
 .btn:disabled {
     background: #aaa;
     cursor: not-allowed;
+}
+
+.btn.secondary {
+    background: #546e7a;
+}
+
+.btn.danger {
+    background: #b71c1c;
 }
 
 .slots {
@@ -132,6 +146,67 @@ footer {
     color: #777;
 }
 
+.result {
+    margin-top: 15px;
+    overflow-wrap: anywhere;
+}
+
+.result p {
+    margin: 8px 0;
+}
+
+.result .record {
+    background: #f6f9fc;
+    padding: 14px;
+    margin: 12px 0;
+    border: 1px solid #e0e6ed;
+    border-radius: 8px;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.button-row .btn {
+    flex: 0 0 auto;
+}
+
+#pageIndicator {
+    margin-bottom: 0;
+}
+
+details {
+    border-top: 1px solid #e0e6ed;
+    padding: 16px 0;
+    margin-top: 15px;
+}
+
+summary {
+    cursor: pointer;
+    color: #1565c0;
+    font-weight: bold;
+}
+
+.warning {
+    padding: 12px;
+    background: #fff1f0;
+    color: #8e1717;
+    border-left: 4px solid #b71c1c;
+}
+
+.error-text {
+    color: #b71c1c;
+    font-weight: bold;
+}
+
+.success-text {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
 @media (max-width: 600px) {
     header {
         text-align: center;
@@ -143,5 +218,9 @@ footer {
 
     .btn {
         width: 100%;
+    }
+
+    .button-row .btn {
+        flex: 1 1 100%;
     }
 }

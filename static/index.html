@@ -17,11 +17,11 @@
     <main class="container">
         <section class="card">
             <h2>Connect to Booking API</h2>
-            <p class="muted">Enter your API key to access appointments.</p>
+            <p class="muted">Enter your API key to access appointments. Your key stays in this browser tab.</p>
 
             <div class="form-group">
                 <label for="apiKey">API Key</label>
-                <input type="password" id="apiKey" placeholder="Enter API key">
+                <input type="password" id="apiKey" placeholder="Enter API key" autocomplete="off">
             </div>
 
             <button id="loadSlots" class="btn">View Available Slots</button>
@@ -31,6 +31,13 @@
             <h2>Available Appointments</h2>
             <p class="muted">Choose a suitable appointment time.</p>
 
+            <div class="form-group">
+                <label for="providerFilter">Filter by Doctor</label>
+                <select id="providerFilter">
+                    <option value="">All doctors</option>
+                </select>
+            </div>
+
             <div id="slots" class="slots">
                 <p>Enter your API key and click View Available Slots.</p>
             </div>
@@ -38,7 +45,6 @@
 
         <section class="card" id="bookingSection" hidden>
             <h2>Book Your Appointment</h2>
-
             <p id="selectedSlot"></p>
 
             <form id="bookingForm">
@@ -52,9 +58,7 @@
                     <input type="email" id="email" required>
                 </div>
 
-                <button type="submit" class="btn">
-                    Confirm Booking
-                </button>
+                <button type="submit" class="btn">Confirm Booking</button>
             </form>
         </section>
 
@@ -69,7 +73,151 @@
             </button>
         </section>
 
-        <p id="message" role="alert"></p>
+        <section class="card">
+            <h2>Find a Booking</h2>
+            <p class="muted">Look up a booking by its ID.</p>
+
+            <form id="lookupForm">
+                <div class="form-group">
+                    <label for="lookupId">Booking ID</label>
+                    <input id="lookupId" required placeholder="Paste booking ID">
+                </div>
+                <button class="btn" type="submit">Find Booking</button>
+            </form>
+
+            <div id="lookupResult" class="result" aria-live="polite"></div>
+        </section>
+
+        <section class="card">
+            <h2>My Bookings</h2>
+            <p class="muted">Search by email and browse booking history.</p>
+
+            <form id="historyForm">
+                <div class="form-group">
+                    <label for="historyEmail">Email Address</label>
+                    <input id="historyEmail" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pageLimit">Bookings per page</label>
+                    <select id="pageLimit">
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+
+                <button class="btn" type="submit">View My Bookings</button>
+            </form>
+
+            <div id="historyResult" class="result" aria-live="polite"></div>
+
+            <div class="button-row">
+                <button class="btn secondary" id="previousPage" disabled>
+                    Previous Page
+                </button>
+                <button class="btn" id="nextPage" disabled>
+                    Next Page
+                </button>
+            </div>
+
+            <p id="pageIndicator" class="muted"></p>
+        </section>
+
+        <section class="card">
+            <h2>Cancel a Booking</h2>
+            <p class="muted">Cancel an existing appointment by booking ID.</p>
+
+            <form id="cancelForm">
+                <div class="form-group">
+                    <label for="cancelId">Booking ID</label>
+                    <input id="cancelId" required placeholder="Paste booking ID">
+                </div>
+
+                <button class="btn danger" type="submit">Cancel Booking</button>
+            </form>
+
+            <div id="cancelResult" class="result" aria-live="polite"></div>
+        </section>
+
+        <section class="card">
+            <h2>API Demonstration Tools</h2>
+            <p class="muted">
+                Optional tools for your assessment demonstration.
+                These requests use the API key entered above.
+            </p>
+
+            <details>
+                <summary>Idempotency: create and retry a booking</summary>
+
+                <p class="muted">
+                    Select an available slot, submit once, then retry
+                    with the same key. Do not generate a new key
+                    between attempts.
+                </p>
+
+                <form id="idempotencyForm">
+                    <div class="form-group">
+                        <label for="demoSlot">Available Slot</label>
+                        <select id="demoSlot" required>
+                            <option value="">Load slots first</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="demoName">Patient Name</label>
+                        <input id="demoName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="demoEmail">Email</label>
+                        <input id="demoEmail" type="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="demoKey">Idempotency Key</label>
+                        <input id="demoKey" required placeholder="Generate a key">
+                    </div>
+
+                    <div class="button-row">
+                        <button type="button" class="btn secondary" id="generateDemoKey">
+                            Generate New Key
+                        </button>
+                        <button type="submit" class="btn">
+                            Submit / Retry Same Request
+                        </button>
+                    </div>
+                </form>
+
+                <div id="idempotencyResult" class="result" aria-live="polite"></div>
+            </details>
+
+            <details class="admin-panel">
+                <summary>Admin: Reset test slots and bookings</summary>
+
+                <p class="warning">
+                    Warning: Reset deletes ALL existing slots, bookings,
+                    booking attempts, and idempotency records in the
+                    connected database. On your live site, this affects
+                    production data.
+                </p>
+
+                <p class="muted">
+                    The reset will create three future test slots.
+                    Use only when you intend to replace the database contents.
+                </p>
+
+                <button id="resetDemo" class="btn danger" type="button">
+                    Reset Database with Demo Slots
+                </button>
+
+                <div id="resetResult" class="result" aria-live="polite"></div>
+            </details>
+        </section>
+
+        <p id="message" role="alert" aria-live="polite"></p>
     </main>
 
     <footer>
